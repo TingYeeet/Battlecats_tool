@@ -1,0 +1,21 @@
+.main_content table{
+    margin:auto;
+    color:white;
+    background-color: #8b2915;
+    text-align: center;
+    width:100%;
+
+    border-style: none;
+    border-collapse: collapse;
+}
+
+.main_content table td{
+    padding:10px;
+    border-style:solid;
+    border-color: white;
+    border-width: 1px;
+}
+
+#deeper_color{
+    background-color: #6d2415;
+}

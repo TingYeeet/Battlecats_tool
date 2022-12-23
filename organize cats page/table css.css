@@ -1,0 +1,21 @@
+#main_table,
+#party_table {
+    margin: auto;
+    width: 75%;
+    text-align: center;
+}
+
+#main_table th {
+    font-size: 30px;
+    width: 50%;
+}
+
+.put_out_button {
+    margin: 0px;
+    border: 0px;
+    padding: 0px;
+}
+
+#had_cats_table td {
+    width: 75%;
+}
