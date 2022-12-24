@@ -36,18 +36,16 @@
         $link = mysqli_connect($host, $dbuser, $dbpassword, $dbname);
         if($link){
             mysqli_query($link,'SET NAMES utf8');
-            
+
             $post_none = $_POST["none_cats_input"];
             $post_had = $_POST["had_cats_input"];
+            $cat_party_raw = $_POST["cats_party_input"];
             $none_cats = json_decode($post_none);
             $had_cats = json_decode($post_had);
-            $sql = "UPDATE `user` SET `未擁有貓`='$post_none',`擁有貓`='$post_had' WHERE `名字`='user1'";
+            $sql = "UPDATE `user` SET `未擁有貓`='$post_none',`擁有貓`='$post_had',`貓編組`='$cat_party_raw' WHERE `名字`='user1'";
             $result = mysqli_query($link, $sql);
 
-            $sql = "SELECT * FROM `user` WHERE `名字`='user1'";
-            $result = mysqli_query($link, $sql);
-            $data = mysqli_fetch_assoc($result);
-            $cats_party = json_decode($data["貓編組"]);
+            $cats_party = json_decode($cat_party_raw);
             $party_index = (int)$_POST["cats_party_index"];
         }
         else{
@@ -60,6 +58,7 @@
             <tbody>
                 <tr class="party_table_tr">
                     <?php
+                    print("<td rowspan=\"2\"><button onclick=\"press_left()\"><img src=\"../another image/left.png\" width=\"20px\"></button></td>");
                     for($i=0;$i<5;$i++){
                         if(count($cats_party[$party_index]) <= $i){
                             print("<td><img src=\"../cats_squre/uni_blank.png\" id=\"cat".$i."\" class=\"party_cats\"></td>");
@@ -67,12 +66,13 @@
                             print("<td><img src=\"../cats_squre/".$cats_party[$party_index][$i].".png\" id=\"cat".$i."\" class=\"party_cats\"></td>");
                         }
                     }
+                    print("<td rowspan=\"2\"><button onclick=\"press_right()\"><img src=\"../another image/right.png\" width=\"20px\"></button></td>");
                     ?>
                 </tr>
                 <tr class="party_table_tr">
                     <?php
                     for($i=5;$i<10;$i++){
-                        if(count($cats_party[$party_index]) < $i){
+                        if(count($cats_party[$party_index]) <= $i){
                             print("<td><img src=\"../cats_squre/uni_blank.png\" id=\"cat".$i."\" class=\"party_cats\"></td>");
                         }else{
                             print("<td><img src=\"../cats_squre/".$cats_party[$party_index][$i].".png\" id=\"cat".$i."\" class=\"party_cats\"></td>");
@@ -82,12 +82,12 @@
                 </tr>
             </tbody>
         </table>
-        <form method="post" action="party making.php">
-            <input type="hidden" id="none_cats_input" value=<?php echo $post_none ?> name="none_cats_input">
-            <input type="hidden" id="had_cats_input" value=<?php echo $post_had ?> name="had_cats_input">
-            <input type="hidden" id="cats_party_input" value=<?php echo $data["貓編組"] ?> name="cats_party_input">
-            <input type="hidden" id="cats_party_index" value=<?php echo $party_index ?> name="cats_party_index">
-            <input type="submit" id="submit" value="儲存">
+        <form id="database_form" method="post">
+            <input type="text" id="cats_party_input" value=<?php echo $cat_party_raw ?> name="cats_party_input">
+            <input type="text" id="cats_party_index" value=<?php echo $party_index ?> name="cats_party_index">
+            <input type="button" id="submit" value="儲存">
+            <input type="button" id="new_party" value="新增">
+            <input type="button" id="delete_party" value="刪除">
         </form>
         <table id="had_cats_table">
             <tbody>

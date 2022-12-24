@@ -11,7 +11,7 @@
 <body>
     <br>
 
-    <a href="home page.html" class="logo" id="logo">
+    <a href="../home page.html" class="logo" id="logo">
         <img src="../another image/logo.png" alt="logo.png">
     </a>
 
@@ -57,6 +57,7 @@
         <form method="post" action="party making.php">
             <input type="hidden" id="none_cats_input" value="" name="none_cats_input">
             <input type="hidden" id="had_cats_input" value="" name="had_cats_input">
+            <input type="text" id="cats_party_input" value=<?php echo $data["貓編組"] ?> name="cats_party_input">
             <input type="hidden" id="cats_party_index" value="0" name="cats_party_index">
             <input type="submit" id="submit" value="確認">
         </form>

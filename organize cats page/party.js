@@ -1,7 +1,6 @@
 var party_table_tr = $(".party_table_tr");
 var party_cats_img, had_cats = $(".had_cats");
-var cats_party_list = $("#cats_party_input").val(), had_cats_list = [];
-cats_party_list = JSON.parse(cats_party_list);
+var cats_party_list = JSON.parse($("#cats_party_input").val()), had_cats_list = [];
 var cats_party_index = parseInt($("#cats_party_index").val());
 
 for (let i = 0; i < had_cats.length; i++) {
@@ -33,16 +32,18 @@ function put_out_party(img_src, index) {
 }
 
 function put_in_party(img_src) {
-    if (cats_party_list[cats_party_index].length < 10) {
-        for (let i = 0; i < 10; i++) {
-            $(party_cats_img[i]).unbind();
-        }
+    if (cats_party_list[cats_party_index].length >= 10)
+        return;
 
-        $(had_cats[had_cats_list.indexOf(img_src)]).hide();
-        party_cats_img[cats_party_list[cats_party_index].length].src = "../cats_squre/" + img_src + ".png";
-        cats_party_list[cats_party_index].push(img_src);
-        refresh();
+    for (let i = 0; i < 10; i++) {
+        $(party_cats_img[i]).unbind();
     }
+
+    $(had_cats[had_cats_list.indexOf(img_src)]).hide();
+    party_cats_img[cats_party_list[cats_party_index].length].src = "../cats_squre/" + img_src + ".png";
+    cats_party_list[cats_party_index].push(img_src);
+
+    refresh();
 }
 
 function refresh() {
@@ -70,4 +71,39 @@ function refresh() {
             put_out_party(party_cats_img[i].src.split("/").pop().split(".")[0], i);
         });
     }
+
+    $("#cats_party_input").val(JSON.stringify(cats_party_list));
 }
+
+function press_left(){
+    cats_party_index++;
+    if(cats_party_index == cats_party_list.length)
+        cats_party_index -= cats_party_list.length;
+
+    $("#cats_party_index").val(cats_party_index);
+    //$("#database_form").submit();
+}
+
+function press_right(){
+    cats_party_index--;
+    if(cats_party_index == -1)
+        cats_party_index += cats_party_list.length;
+
+    $("#cats_party_index").val(cats_party_index);
+    //$("#database_form").submit();
+}
+
+$("#new_party").click(function(){
+    cats_party_list.push([]);
+    cats_party_index = cats_party_list.length - 1;
+
+    $("#cats_party_input").val(cats_party_list);
+    $("#cats_party_index").val(cats_party_index);
+    //$("#database_form").submit();
+});
+
+$("#submit").click(function(){
+    var cats_party_input = $("#cats_party_input").val();
+
+    $.post("write party in db.php", { cats_party_input: cats_party_input });
+});
