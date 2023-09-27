@@ -4,3 +4,6 @@
 ## 分工事項
 * 林庭毅：貓咪資料頁面、聯組頁面、編隊頁面功能
 * 陳建維：貓咪資料頁面、登入功能、編隊頁面功能
+## 網頁效果
+![alt text](https://github.com/TingYeeet/Battlecats_tool/blob/master/home page img.png?raw=true)
+![alt text](https://github.com/TingYeeet/Battlecats_tool/blob/master/organize page img.png?raw=true)
